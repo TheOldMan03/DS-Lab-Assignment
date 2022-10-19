@@ -62,7 +62,7 @@ void PAdd(Polynomial p1[],Polynomial p2[],int terms1,int terms2){
     while (startB<(terms2)){
         sum[startC].expon=p2[startB].expon;
         sum[startC].coeff=p2[startB].coeff;
-        startA++;
+        startB++;
         startC++;
 
     }
