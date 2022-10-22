@@ -41,47 +41,45 @@ void Sparse_Converter(int r,int c,Sparse a[]){
 
 void Transpose(Sparse a[]){
 
-    Sparse b[(a[0].row*a[0].col)+1];
+    Sparse Trans[((a[0].row*a[0].col)+1)];
 
-    b[0].row=a[0].col;
-    b[0].col=a[0].row;
-    b[0].val=a[0].val;
+    Trans[0].row = a[0].col;
+    Trans[0].col = a[0].row;
+    Trans[0].val = a[0].val;
 
-    int n=a[0].val,cols=a[0].col,rows=a[0].row;
+    int rowTerms[a[0].col];
+    int startpos[a[0].col];
 
-    int rowTerms[cols],startPOS[cols+1];
     int i,j;
 
+    startpos[0] = 1;
 
-    for(i=0;i<cols;i++){
-        rowTerms[i]=0;
+    for (i = 0; i < a[0].col; i++) {
+        rowTerms[i] = 0;
     }
 
-    for(i=1;i<=n;i++){
-        rowTerms[a[0].col]++;
+    for (i = 1; i <= a[0].val; i++) {
+        rowTerms[a[i].col]++;
     }
 
-    startPOS[0]=1;
-    
-    for (i=1;i<cols;i++){
-        startPOS[i]=startPOS[i-1]+rowTerms[i-1];
+    for (i = 1; i < a[0].col; i++) {
+        startpos[i] = startpos[i - 1] + rowTerms[i - 1];
     }
 
-    for(i=1;i<=n;i++){
-
-        j=startPOS[a[i].col]++;
-        b[j].row=a[i].col;
-        b[j].col=a[i].row;
-        b[j].val=a[i].val;
-
+    for (i = 1; i <= a[0].val; i++) {
+        j = startpos[a[i].col]++;
+        Trans[j].row = a[i].col;
+        Trans[j].col = a[i].row;
+        Trans[j].val = a[i].val;
     }
 
-    for (i=0;i<=b[0].val;i++){
-        printf("%-2d\t%-2d\t%-2d",b[i].row,b[i].col,b[i].val);
+    for (i=0;i<Trans[0].val;i++){
+        printf("%-2d\t%-2d\t%-2d",Trans[i].row,Trans[i].col,Trans[i].val);
         printf("\n");
     }
-}
 
+    
+}
 
 int main(){
 
@@ -100,12 +98,6 @@ int main(){
     Transpose(A);
 
     int i;
-
-    for (i=0;i<A[0].val;i++){
-        printf("%-2d\t%-2d\t%-2d",A[i].row,A[i].col,A[i].val);
-        printf("\n");
-    }
-
 
     return 0;
 
