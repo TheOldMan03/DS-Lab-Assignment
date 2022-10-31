@@ -11,32 +11,46 @@ typedef struct{
 
 void Sparse_Converter(int rows,int cols,Sparse s_m[]){
 
-    int i,j,k=1;
-    int elem;
+	int r,c,k;
 
-    for(i=0;i<rows;i++){
-        for(j=0;j<cols;j++){
-
-            printf("Enter the Data for the Matrix: ");
-            scanf("%d",&elem);
-
-            if (elem!=0){
-                s_m[k].row=i;
-                s_m[k].col=j;
-                s_m[k].val=elem;
-                k++;
-            }
-
-        }
-        printf("\n");
-    }
-    printf("\n");
-    printf("\n");
-
-    s_m[0].row=rows;
-    s_m[0].col=cols;
-    s_m[0].val=k-1;
-
+	printf("Enter the Number of Non Zero Elements present in the Matrix: ");
+	scanf("%d",&k);
+	
+	printf("Enter the numbers of Rows: ");
+	scanf("%d",&r);
+	
+	printf("Enter the Number of Coloumns: ");
+	scanf("%d",&c);
+	printf("\n");
+	
+	
+	s_m[0].row=r;
+	s_m[0].col=c;
+	s_m[0].val=k;
+	
+	int i;
+	int x,y,z;
+	int c=1;
+	
+	
+	for(i=0;i<k;i++){
+		
+		printf("Enter the Non Zero Element in the Array: ");
+		scanf("%d",&x);
+		
+		printf("Enter the Row in which the Element lies in: ");
+		scanf("%d",&y);
+		
+		printf("Enter the Coloumn in which the Element lies in: ");
+		scanf("%d",&z);
+		printf("\n");
+		
+		s_m[c].row=y;
+		s_m[c].col=z;
+		s_m[c].val=x;
+		
+		c++;	
+	}
 }
 
 void Sparse_Adder(Sparse x[],Sparse y[]){
