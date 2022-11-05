@@ -55,7 +55,7 @@ void Transpose(Sparse a[]){
 
     for(i=0;i<a[0].col;i++){
 
-        for(j=1;j<a[0].val;j++)
+        for(j=1;j<=a[0].val;j++)
 
         if (a[j].col==i){
             
