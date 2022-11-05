@@ -94,7 +94,7 @@ void Sparse_Adder(Sparse x[],Sparse y[]){
 
         }
 
-        while (i<x[0].val){
+        while (i<=x[0].val){
 
             Sum[k].row=x[i].row;
             Sum[k].col=x[i].col;
@@ -105,7 +105,7 @@ void Sparse_Adder(Sparse x[],Sparse y[]){
 
         }
 
-        while (j<y[j].val){
+        while (j<=y[0].val){
 
             Sum[k].row=y[j].row;
             Sum[k].col=y[j].col;
@@ -167,6 +167,5 @@ int main(){
     Sparse_Converter(r2,c2,k2,b);
 
     Sparse_Adder(a,b);
-
 
 }
