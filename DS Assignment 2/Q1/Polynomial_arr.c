@@ -69,8 +69,9 @@ void PAdd(Polynomial p1[],Polynomial p2[],int terms1,int terms2){
 
     int i;
 
-    printf("%dx^%d+",sum[0].coeff,sum[0].expon);
-    for (i=1;i<=startC-2;++i){
+
+   printf("%dx^%d+",sum[0].coeff,sum[0].expon);
+    for (i=1;i<startC-2;++i){
         printf("%dx^%d+",sum[i].coeff,sum[i].expon);
     }
     printf("%dx^%d",sum[startC-1].coeff,sum[startC-1].expon);

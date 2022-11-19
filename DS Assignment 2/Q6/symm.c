@@ -129,4 +129,8 @@ int main(){
     int i;
 
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ae6e1a78206b233276122ba26e3aff346b574a99
