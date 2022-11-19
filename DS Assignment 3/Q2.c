@@ -170,7 +170,7 @@ void Display(int choiceOption){
 
 void StackOperations(){
 
-	int c1; //By Default uses the 1st Stack
+	int c1; 
 	
 	do{
 		printf("\n1.Push");
