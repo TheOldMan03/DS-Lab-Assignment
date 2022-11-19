@@ -7,17 +7,17 @@ int top2=sizeMax;
 
 void StackOperations(int);
 
-void Push(int elem,int choiceOption,int top){
+void Push(int elem,int choiceOption){
 	
 	if (choiceOption==1){
 		
-		if (top==(sizeMax/2)-1){
+		if (top1==(sizeMax/2)-1){
 			printf("Stack overflow!");
 			StackOperations(choiceOption);
 		}
 		
 		else{
-			Stack[++top]=elem;
+			Stack[++top1]=elem;
 			printf("Element %d successfully added!",elem);
 			printf("\n");
 			StackOperations(choiceOption);
@@ -27,13 +27,13 @@ void Push(int elem,int choiceOption,int top){
 	
 	if (choiceOption==2){
 		
-		if (top==sizeMax/2){
+		if (top2==sizeMax/2){
 			printf("Stack Overflow!");
 			StackOperations(choiceOption);
 		}
 		
 		else{
-			Stack[--top]=elem;
+			Stack[--top2]=elem;
 			printf("Element %d successfully added!",elem);
 			printf("\n");
 			StackOperations(choiceOption);
@@ -43,11 +43,11 @@ void Push(int elem,int choiceOption,int top){
 		
 }
 
-void Pop(int top,int choiceOption){
+void Pop(int choiceOption){
 
 	if (choiceOption==1){
 		
-		if (top==-1){
+		if (top1==-1){
 			printf("Stack Underflow!");
 			printf("\n");
 			StackOperations(choiceOption);
@@ -55,7 +55,7 @@ void Pop(int top,int choiceOption){
 		
 		else{
 			int y;
-			y=Stack[--top];
+			y=Stack[--top1];
 			printf("The Element %d is Popped out of the Stack",y);
 			printf("\n");
 			StackOperations(choiceOption);
@@ -64,7 +64,7 @@ void Pop(int top,int choiceOption){
 	
 	else{
 		
-		if (top==sizeMax){
+		if (top2==sizeMax){
 			printf("Stack Underflow!");
 			printf("\n");
 			StackOperations(choiceOption);
@@ -72,7 +72,7 @@ void Pop(int top,int choiceOption){
 		
 		else{
 			int y;
-			y=Stack[++top];
+			y=Stack[++top2];
 			printf("The element %d is popped out of the stack",y);
 			printf("\n");
 			StackOperations(choiceOption);
@@ -80,19 +80,19 @@ void Pop(int top,int choiceOption){
 	}
 }
 
-void Peek(int top,int choiceOption){
+void Peek(int choiceOption){
 
 	int i;
 	
 	if (choiceOption==1){
 	
-		if(top==-1){
+		if(top1==-1){
 			printf("The Stack is Empty!");
 			StackOperations(choiceOption);
 		}
 		
 		else{
-			printf("%d",Stack[top]);
+			printf("%d",Stack[top1]);
 			StackOperations(choiceOption);
 			
 		}	
@@ -100,13 +100,13 @@ void Peek(int top,int choiceOption){
 	
 	else{
 		
-		if (top==sizeMax){
+		if (top2==sizeMax){
 			printf("The Stack is Empty!");
 			StackOperations(choiceOption);
 		}
 		
 		else{
-			printf("%d",Stack[top]);
+			printf("%d",Stack[top2]);
 			StackOperations(choiceOption);
 		}
 		
@@ -121,15 +121,15 @@ void Display(int top,int choiceOption){
 	
 	if (choiceOption==1){
 		
-		if (top==-1){
+		if (top1==-1){
 			printf("The Stack is Empty");
 			StackOperations(choiceOption);
 		}
 		
 		else{
 		
-			for(i=0;i<top;i++){
-				printf("%d",Stack[top]);
+			for(i=0;i<top1;i++){
+				printf("%d",Stack[i]);
 				printf("\n");
 			}
 			
@@ -141,14 +141,14 @@ void Display(int top,int choiceOption){
 	
 	else{
 	
-		if (top==sizeMax){
+		if (top2==sizeMax){
 			printf("The Stack is Empty");
 			StackOperations(choiceOption);
 		}
 		
 		else{
 		
-			for(i=sizeMax-1;i>=top;i--){
+			for(i=sizeMax-1;i>=top2;i--){
 				printf("%d",Stack[i]);
 			}
 			
@@ -177,7 +177,9 @@ int StackSelection(){
 	}
 	
 	else if (c>3 || c<0){
-		printf("Invalid Choice!");
+		printf("Invalid Choice!\n");
+		printf("Try Again!\n");
+		StackSelection();
 	}
 	
 	else{
@@ -206,44 +208,44 @@ void StackOperations(int c){
 			scanf("%d",&x);
 			
 			if (c==1){
-				Push(x,c,top1);
+				Push(x,c);
 			}
 			
 			else{
-				Push(x,c,top2);
+				Push(x,c);
 			}
 		}
 		
 		else if (c1==2){
 		
 			if (c==1){
-				Pop(top1,c);
+				Pop(c);
 			}
 			
 			else{
-				Pop(top2,c);
+				Pop(c);
 			}
 		}
 		
 		else if (c1==3){
 			
 			if (c==1){
-				Peek(top1,c);
+				Peek(c);
 			}
 			
 			else{
-				Peek(top2,c);
+				Peek(c);
 			}
 		}
 		
 		else if (c1==4){
 			
 			if (c==1){
-				Display(top1,c);
+				Display(c);
 			}
 			
 			else{
-				Display(top2,c);
+				Display(c);
 			}
 		}
 		
