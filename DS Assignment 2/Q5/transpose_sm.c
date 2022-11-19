@@ -44,7 +44,7 @@ void Sparse_Converter(int rows,int cols,int k,Sparse s_m[]){
 }
 
 
-void Transpose(Sparse a[]){
+void Transpose(Sparse a[]){ //Simple Transpose Algorithm
 
     Sparse b[a[0].val+1];
 
@@ -57,27 +57,23 @@ void Transpose(Sparse a[]){
 
     for(i=0;i<a[0].col;i++){
 
-        for(j=1;j<a[0].val;j++)
+        for(j=1;j<=a[0].val;j++){
 
-        if (a[j].col==i){
-            
-            b[k].row=a[j].col;
-            b[k].col=a[j].row;
-            b[k].val=a[j].val;
-            k++;
+			if (a[j].col==i){
+				
+				b[k].row=a[j].col;
+				b[k].col=a[j].row;
+				b[k].val=a[j].val;
+				k++;
 
-        }
+			}
+    	}
+	}
 
+    for(i=0;i<=b[0].val;i++){
 
+        printf("\n%d\t%d\t%d",b[i].row,b[i].col,b[i].val);
     }
-    
-    for(i=0;i<k;i++){
-
-            printf("\n%d\t%d\t%d",b[i].row,b[i].col,b[i].val);
-        }
-    
-    
-    
     
 }
 
@@ -100,7 +96,5 @@ int main(){
     Transpose(A);
 
     return 0;
-
-
 
 }

@@ -30,7 +30,7 @@ void PAdd(Polynomial p1[],Polynomial p2[],int terms1,int terms2){
         else if (p1[startA].expon<p2[startB].expon){
 
             sum[startC].expon=p2[startB].expon;
-            sum[startC].coeff=p2[startC].coeff;
+            sum[startC].coeff=p2[startB].coeff;
 
             startB++;
             startC++;
@@ -50,16 +50,16 @@ void PAdd(Polynomial p1[],Polynomial p2[],int terms1,int terms2){
 
     }
 
-    while (startA<(terms1)){
-        sum[startA].expon=p1[startA].expon;
-        sum[startA].coeff=p1[startA].coeff;
+    while (startA<terms1){
+        sum[startC].expon=p1[startA].expon;
+        sum[startC].coeff=p1[startA].coeff;
         startA++;
         startC++;
 
     }
 
 
-    while (startB<(terms2)){
+    while (startB<terms2){
         sum[startC].expon=p2[startB].expon;
         sum[startC].coeff=p2[startB].coeff;
         startB++;
@@ -69,11 +69,11 @@ void PAdd(Polynomial p1[],Polynomial p2[],int terms1,int terms2){
 
     int i;
 
-
-    for (i=0;i<startC;++i){
-        printf("%dx^%d",sum[i].coeff,sum[i].expon);
-        printf("\n");
+    printf("%dx^%d+",sum[0].coeff,sum[0].expon);
+    for (i=1;i<=startC-2;++i){
+        printf("%dx^%d+",sum[i].coeff,sum[i].expon);
     }
+    printf("%dx^%d",sum[startC-1].coeff,sum[startC-1].expon);
 
 }
 
