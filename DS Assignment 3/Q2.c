@@ -4,8 +4,9 @@
 int Stack[sizeMax];
 int top1=-1;
 int top2=sizeMax;
+int c=1; //The choice for selecting which stack is by Default the 1st one
 
-void StackOperations(int);
+void StackOperations();
 
 void Push(int elem,int choiceOption){
 	
@@ -55,8 +56,9 @@ void Pop(int choiceOption){
 		
 		else{
 			int y;
-			y=Stack[--top1];
+			y=Stack[top1];
 			printf("The Element %d is Popped out of the Stack",y);
+			y=Stack[top1--];
 			printf("\n");
 			StackOperations(choiceOption);
 		}	
@@ -72,8 +74,9 @@ void Pop(int choiceOption){
 		
 		else{
 			int y;
-			y=Stack[++top2];
+			y=Stack[top2];
 			printf("The element %d is popped out of the stack",y);
+			y=Stack[top2++];
 			printf("\n");
 			StackOperations(choiceOption);
 		}	
@@ -88,11 +91,13 @@ void Peek(int choiceOption){
 	
 		if(top1==-1){
 			printf("The Stack is Empty!");
+			printf("\n");
 			StackOperations(choiceOption);
 		}
 		
 		else{
 			printf("%d",Stack[top1]);
+			printf("\n");
 			StackOperations(choiceOption);
 			
 		}	
@@ -102,11 +107,13 @@ void Peek(int choiceOption){
 		
 		if (top2==sizeMax){
 			printf("The Stack is Empty!");
+			printf("\n");
 			StackOperations(choiceOption);
 		}
 		
 		else{
 			printf("%d",Stack[top2]);
+			printf("\n");
 			StackOperations(choiceOption);
 		}
 		
@@ -114,7 +121,7 @@ void Peek(int choiceOption){
 	}	
 }
 
-void Display(int top,int choiceOption){
+void Display(int choiceOption){
 
 
 	int i;
@@ -128,7 +135,7 @@ void Display(int top,int choiceOption){
 		
 		else{
 		
-			for(i=0;i<top1;i++){
+			for(i=top1;i>=0;i--){
 				printf("%d",Stack[i]);
 				printf("\n");
 			}
@@ -143,13 +150,15 @@ void Display(int top,int choiceOption){
 	
 		if (top2==sizeMax){
 			printf("The Stack is Empty");
+			printf("\n");
 			StackOperations(choiceOption);
 		}
 		
 		else{
 		
-			for(i=sizeMax-1;i>=top2;i--){
+			for(i=top2;i<=sizeMax-1;i++){
 				printf("%d",Stack[i]);
+				printf("\n");
 			}
 			
 			printf("\n");
@@ -159,48 +168,23 @@ void Display(int top,int choiceOption){
 }
 
 
-int StackSelection(){
-	
-	printf("\n");
-	
-	int c;
-	
-	printf("\n1.Stack1");
-	printf("\n2.Stack2");
-	printf("\n3.Exit");
+void StackOperations(){
 
-	printf("Choose the stack you want to do the Operations on: ");
-	scanf("%d",&c);
-	
-	if (c==3){
-		return 0;
-	}
-	
-	else if (c>3 || c<0){
-		printf("Invalid Choice!\n");
-		printf("Try Again!\n");
-		StackSelection();
-	}
-	
-	else{
-		StackOperations(c);
-	}
-}
-
-void StackOperations(int c){
-
-	int c1;
+	int c1; //By Default uses the 1st Stack
 	
 	do{
 		printf("\n1.Push");
 		printf("\n2.Pop");
 		printf("\n3.Peek");
 		printf("\n4.Display");
-		printf("\n5.Return to Another Stack ");
+		printf("\n5.Choose Another Stack ");
+		printf("\n6.Exit");
 		
 		printf("\n");
 		printf("Select your choice: ");
 		scanf("%d",&c1);
+
+		printf("\n");
 		
 		if (c1==1){//Pushing an element to the stack
 			int x;
@@ -250,18 +234,45 @@ void StackOperations(int c){
 		}
 		
 		else if (c1==5){
+
+			printf("\n1.Stack1");
+			printf("\n2.Stack2");
+
+			printf("\nChoose the stack you want to do the Operations on: ");
+			scanf("%d",&c);
+
+			if (c==1){
+				printf("The Stack selected is the First One");
+				printf("\n");
+			}
+
+			else if (c==2){
+				printf("The Stack selected is the Second One");
+				printf("\n");
+			}
+
+			else{
+				printf("Invalid Choice!"); 
+				printf("\n");
+				//Here if User tries a silly Number it will go to its origin value
+			}
 			
-			StackSelection();
+		}
+
+		else if (c1==6){
+			printf("\nProgram Terminated!");
+			break;
 		}
 			
 		else{
 			printf("Invalid Choice");
 		}
 	
-	}while(c1!=5);
+	}while(c1!=6);
 }	
 
 
 int main(){
-	StackSelection();
+	StackOperations();
+	return 0;
 }
