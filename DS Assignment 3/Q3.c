@@ -62,8 +62,9 @@ void Pop(){
         int y;
         y=Stack[top1];
         printf("The Element popped out is %d",y);
+        printf("\n");
         y=Stack[--top1];
-        Aux_Stack[--top2];
+        --top2;
 
     }
 }
@@ -110,9 +111,9 @@ int main(){
 		printf("\n2.Pop");
 		printf("\n3.Display Minimum Element");
 		printf("\n4.Display all the Elements");
-        printf("\n 5.Exit");
+        printf("\n5.Exit");
 
-        printf("Choice: ");
+        printf("\nChoice: ");
         scanf("%d",&c);
         printf("\n");
 
