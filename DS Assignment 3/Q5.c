@@ -23,8 +23,9 @@ int Pop(){
 	}
 	
 	else{
-		int x=Stack[--top];
-		return x;
+		int d=Stack[top];
+        --top;
+		return d;
 	}
 }
 
@@ -92,6 +93,10 @@ int main(){
         }
         
     }
+    printf("\n");
+
+    printf("\n");
+    printf("Binary Representation");
     printf("\n");
 
     for(i=top;i>=0;i--){
