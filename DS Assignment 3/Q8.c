@@ -13,19 +13,17 @@ void Push(char Element){
 	
 	else{
 		Stack[++top]=Element;
-		printf("Element %d is pushed",Element);
-		printf("\n");
 	}
 }
 
-int Pop(){
+char Pop(){
 	if (top==-1){
 		printf("The Stack is empty");
 		printf("\n");
 	}
 	
 	else{
-		int x=Stack[top--];
+		char x=Stack[top--];
 		return x;
 	}
 }
@@ -62,6 +60,10 @@ int PriorityOrder(char operator){
 		case '^':
 			return 3;
 			break;	
+		
+		case '(':
+			return 0;
+			break;
 	}
 	
 }
@@ -108,12 +110,17 @@ int main(){
 				break;
 			
 			case ')':
+				char y;
+				y=Peek();
 				
-				while(Peek()!='('){
+				while(y!='('){
 					
 					PostFix[k]=Pop();
 					k++;
+					y=Peek();
 				}
+				Pop();
+
 				break;
 			
 			default:
@@ -124,8 +131,12 @@ int main(){
 		
 		i++;
 	}
-	
-	PostFix[++k]='\0';
+
+	while(top!=-1){
+		PostFix[k]=Pop();
+		k++;
+	}
+
 	
 	i=0;
 	
@@ -133,30 +144,5 @@ int main(){
 		printf("%c",PostFix[i]);
 		i++;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }	
