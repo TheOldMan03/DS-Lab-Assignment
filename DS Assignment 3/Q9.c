@@ -1,122 +1,80 @@
-#include <stdio.h>
-#define MaxTerms 20
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
 
-int Stack[MaxTerms];
+#define Max_Size 50
+int stack[Max_Size];
 int top=-1;
 
-void Push(int Element){
 
-	if(top==(MaxTerms)-1){
-		printf("The Stack is full!");
-		printf("\n");
-	}
-	
-	else{
-		Stack[++top]=Element;
-	}
+void push(int element){
+    if (top==Max_Size-1){
+        printf("Stack Overflow\n");
+    }
+    else{
+        stack[++top]=element;
+    }
 }
 
-int Pop(){
-	if (top==-1){
-		printf("The Stack is empty");
-		printf("\n");
-	}
-	
-	else{
-		char x=Stack[top--];
-		return x;
-	}
+
+int pop(){
+    if (top==-1){
+        printf("Stack Under Flow\n");
+    }
+    else{
+        int del= stack[top];
+        top--;
+        return del;
+    }
 }
 
-int Peek(){
 
-	if (top==-1){
-		printf("The Stack is Empty");
-		printf("\n");
-	}
-	
-	else{
-		return Stack[top];
-	}
+int PostfixEval(char expression[]){
+
+    int n1,n2,num;
+    char ch;             
+
+    int i=0;
+    while (expression[i]!='\0'){
+        ch=expression[i]; 
+        if (isdigit(ch)){ 
+            num=ch-'0';   
+            push(num);
+        }
+        else{
+            n1=pop();
+            n2=pop();
+
+            switch (ch){
+            case '+':
+                num=n1+n2;
+                break;
+            case '-':
+                num=n2-n1;    
+                break;
+            case '*':
+                num=n1*n2; 
+                break;
+            case '/':
+                num=n2/n1;    
+                break;
+            case '^':
+                num=n2^n1;    
+                break;
+            }
+            push(num);
+        }
+        i++;
+    }
+    return pop();
 }
-
 
 int main(){
-	char postfix[MaxTerms];
-	printf("Enter the Postfix Expression: ",postfix);
-	scanf("%s",postfix);
-	
-	int i=0;
-	int e;
-	char c;
-	
-	while (postfix[i]!='\0'){
-		
-		c=postfix[i];
-		int x,y;
-		
-		switch(c){
-			
-			case '+':
-				y=Pop();
-				x=Pop();
-				
-				e=y+x;
-				Push(e);
-				break;
-					
-			case '-':
-				y=Pop();
-				x=Pop();
-				
-				e=y-x;
-				Push(e);
-				break;
-				
-			
-			case '*':
-				y=Pop();
-				x=Pop();
-				
-				e=y*x;
-				Push(e);
-				break;
-				
-			case '/':
-				y=Pop();
-				x=Pop();
-				
-				e=y/x;
-				Push(e);
-				break;
-				
-			case '^':
-				y=Pop();
-				x=Pop();
-				
-				e=y^x;
-				Push(e);
-				break;
-				
-			case ' ':
-				continue;
-				//ignoring spaces
-			
-			default:
-				e=c-48;
-				Push(e);
-				break;
-
-		}
-		
-		i++;	
-	}
-	
-	printf("\n%d",Stack[top]);
-	
+    
+    char expression[Max_Size];
+    printf("Enter the Postfix Expression: ");
+    scanf("%s",expression);
+    printf("The Result of the expression %s = ",expression);
+    int x=PostfixEval(expression);
+    printf("%d",x);
 }
-
-
-
-
-
