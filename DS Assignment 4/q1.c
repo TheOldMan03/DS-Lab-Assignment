@@ -9,66 +9,32 @@ struct Node{
 	struct Node* next;
 };
 
-int main(){
+struct Node* head=(struct Node*)malloc(sizeof(struct Node)); //For the 1st Node
+
+struct Node* top,temp;
+top=head;
+
+void Push(int elem){
+	//There is no case of Stack Overflow in the case of a Linked List
+
+	if (top==head){
 	
-	struct Node* head; //Head is a pointer which points to the 1st Node of the LinkedList
-	//And it is type: Pointer of struct
-	
-	head=(struct Node*)malloc(sizeof(struct Node));
-	
-	
-	if (head==NULL){
-		printf("Memory insufficient!");
+		top->elem=elem;
+		top->next=NULL;
+		top=NULL;
+		
+		printf("")
 	}
 	
-	else{
+	else{ //ie the only condition is top=NULL
 		
-		struct Node* ptr;
-		struct Node* temp;
-		
-		int n;
-		printf("Enter the total Number of elements you want to add in the List: ");
-		scanf("%d",&n);
-		
-		int i;
-		int data;
-		
-		ptr=head; //Initially let head=1000
-		
-		int elem;
-		
-		for(i=0;i<n-1;i++){
-			printf("Enter the element you want to add in the List: ");
-			scanf("%d",&elem);
-			
-			
-			temp=(struct Node*)malloc(sizeof(struct Node)); //The Next Node,say 2000
-			
-			ptr->elem=elem;
-			ptr->next=temp;
-			
-			ptr=temp;
-			
-		}
-		
-		printf("Enter the element you want to add in the List: ");
-		scanf("%d",&elem);
-		
-		ptr->elem=elem;
-		ptr->next=NULL;
-		
-		//For the last element
-		
-		ptr=head;
+		temp=(struct Node*)malloc(sizeof(struct Node));
+		top=temp;
+		top->elem=elem;
+		top->next=NULL;
+		top=NULL;
+	}
 	
-		while(ptr->next!=NULL){
-			printf("%d->",ptr->elem);
-			ptr=ptr->next;
-		}
-		
-		printf("%d",ptr->elem);
-			
-	}	
 }
 
 
