@@ -51,6 +51,8 @@ void Dequeue(){
 		if (front==rear && front!=NULL){
 			printf("The element deleted is %d",front->data);
 			free(front);
+			front=NULL;
+			rear=NULL;
 		}
 	
 		else{
@@ -87,6 +89,11 @@ void Display(){
 	
 	if (front==NULL){
 		printf("Queue Empty");
+		printf("\n");
+	}
+
+	else if (front==rear &&front!=NULL){
+		printf("%d",front->data);
 		printf("\n");
 	}
 	
