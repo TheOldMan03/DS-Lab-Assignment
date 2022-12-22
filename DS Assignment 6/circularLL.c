@@ -8,7 +8,7 @@ struct Node{
 };
 
 struct Node* head=NULL;
-struct Node* temp=NULL;
+struct Node* tail=NULL; //The last added Node in the list and Not actually the tail of the list
 
 void Insert(int elem){
 
@@ -19,54 +19,54 @@ void Insert(int elem){
         head->data=elem;
         head->next=NULL;
 
-        temp=head;
+        tail=head;
     }
 
     else{
-        temp->next=newNode;
+        tail->next=newNode;
 
         newNode->data=elem;
         newNode->next=head;
-        temp=newNode;
+
+        tail=newNode;
     }
 }
 
 void Delete(){
 
     struct Node* ptr;
-    struct Node* t;
 
     ptr=head;
 
     if (head==NULL){
-        printf("\nElement does not exist! ");
+        printf("\nList is empty ");
     }
 
-    else{
+    else{//Deleting Head would be better than deleting tail for efficiency purpose
 
-        if (ptr==head && ptr->next==head){//that is only 1 element is there in the LL 
-                                        //while using this delete function
-            free(head);
-            head=NULL;
-        }
 
-        else if (head->next!=NULL){//ie only 1 element in LL without using this function at all
+        if (head->next==NULL){//Only 1 element in the list
             free(head);
             head=NULL;
         }
 
         else{
 
-            while(ptr->next!=head){
-                ptr=ptr->next;
+            head=ptr->next; //Updating ptr to the next address without losing the previous head address
+
+            if (tail==head){ //ie there were 2 elems,and now only 1 remains
+                head->next=NULL; //it is no longer circular since only 1 element is there
             }
 
-            t=ptr->next;//node to be deleted
-            ptr->next=head;
+            else{
+                tail->next=head;//Updating the last added node's next addr to head
+            }
 
-            free(t);
-            t=NULL;
+            free(ptr);
+            ptr=NULL;
         }
+        printf("\nDeletion Successful");
+
     }
 
 }
@@ -81,16 +81,14 @@ void Display(){
 
     else{
 
-        while(ptr->next!=head){
+        printf("%d ",head->data);
+        ptr=ptr->next;
+
+        while(ptr!=head && ptr!=NULL){
             printf("%d ",ptr->data);
             ptr=ptr->next;
         }
-        ptr=ptr->next;
-        printf("%d ",ptr->data);
-
-        ptr=ptr->next;
-        printf("%d ",ptr->data);
-
+    
     }
 
 }
@@ -132,6 +130,7 @@ int main(){
             
             default:
                 printf("\nInvalid Choice!");
+                break;
 
         }
 
