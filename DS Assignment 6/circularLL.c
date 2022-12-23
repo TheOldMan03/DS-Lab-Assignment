@@ -8,64 +8,281 @@ struct Node{
 };
 
 struct Node* head=NULL;
-struct Node* tail=NULL; //The last added Node in the list and Not actually the tail of the list
 
-void Insert(int elem){
+void IsEmpty(int elem){//Only if the LL is empty
 
     struct Node* newNode=malloc(sizeof(struct Node));
 
-    if (head==NULL){
-        head=newNode;
-        head->data=elem;
-        head->next=NULL;
+    head=newNode;
+    head->data=elem;
+    head->next=NULL;
 
-        tail=head;
+}
+
+void InsertBack(int elem){
+
+    struct Node* newNode=malloc(sizeof(struct Node));
+    struct Node* temp_ptr;
+
+    if (head==NULL){//if no element is there in the list
+        IsEmpty(elem);
     }
 
     else{
-        tail->next=newNode;
+        temp_ptr=head;
 
-        newNode->data=elem;
-        newNode->next=head;
+        if(temp_ptr->next==NULL){//that means only 1 element is there in the list
 
-        tail=newNode;
-    }
-}
-
-void Delete(){
-
-    struct Node* ptr;
-
-    ptr=head;
-
-    if (head==NULL){
-        printf("\nList is empty ");
-    }
-
-    else{//Deleting Head would be better than deleting tail for efficiency purpose
-
-
-        if (head->next==NULL){//Only 1 element in the list
-            free(head);
-            head=NULL;
+            temp_ptr->next=newNode;
+            newNode->data=elem;
+            newNode->next=head;      
         }
 
         else{
 
-            head=ptr->next; //Updating ptr to the next address without losing the previous head address
+            while(temp_ptr->next!=head){
+                temp_ptr=temp_ptr->next;
+            }
 
-            if (tail==head){ //ie there were 2 elems,and now only 1 remains
-                head->next=NULL; //it is no longer circular since only 1 element is there
+            newNode->data=elem;
+            temp_ptr->next=newNode;
+            newNode->next=head;
+        }
+    }
+}
+
+void InsertFront(int elem){
+
+    struct Node* newNode=malloc(sizeof(struct Node));
+    struct Node* temp;
+
+    if (head==NULL){
+        IsEmpty(elem);
+    }
+
+    else{
+
+        newNode->data=elem;
+        newNode->next=head; //the previous head
+
+        head=newNode;//updating head to newNode
+
+        temp=head;
+
+        while(temp->next!=head){
+            temp=temp->next;
+        }
+
+        temp->next=head; //Linking the "last" node of the LL with new Head
+
+    }
+}
+
+void InsertAnyPos(int elem,int next_elem){
+
+    struct Node* newNode=malloc(sizeof(struct Node));
+
+    struct Node* temp1;
+    struct Node* temp2;
+
+    int flag=0;
+
+    
+    if (head==NULL){
+        IsEmpty(elem);
+    }
+
+    else{
+
+        temp1=head;
+
+        while(temp1->next!=head){ 
+
+            if (temp1->data==next_elem){
+                flag=1;
+                break;
             }
 
             else{
-                tail->next=head;//Updating the last added node's next addr to head
+
+                if(temp1->next==NULL){
+                    break;
+                }
+
+                else{
+                    temp1=temp1->next;
+                }
+            }
+        }
+
+        if (flag==1){
+
+            temp2=temp1->next;
+            temp1->next=newNode;
+            newNode->data=elem;
+
+            if(temp2==NULL){
+                newNode->next=head;
             }
 
+            else{
+                newNode->next=temp2;
+            }
+        }
+
+        else{
+            printf("\nThe element does not exist! ");
+        }
+        
+    }
+}
+
+void DeleteBack(){
+
+    struct Node* ptr;
+    struct Node* prev;
+
+    if(head==NULL){
+        printf("\nThe CLL is empty! ");
+    }
+
+    else{
+
+        prev=head;
+        ptr=head->next;
+
+        if (ptr==NULL){//only 1 element in the list
+            free(prev);
+            prev=NULL;
+        }
+
+        else if(ptr->next==head){//2 elements in the list
+            free(ptr);
+            head->next=NULL;
+            ptr=NULL;
+
+        }
+
+        else{
+
+            while(ptr->next!=head){
+                prev=prev->next;
+                ptr=ptr->next;
+
+            }
+
+            prev->next=head;
             free(ptr);
             ptr=NULL;
         }
-        printf("\nDeletion Successful");
+
+    }
+}
+
+void DeleteFront(){
+
+    struct Node* ptr;
+    struct Node* temp;
+
+
+    if(head==NULL){
+        printf("\nThe CLL is empty!");
+    }
+
+    else{
+
+        temp=head;
+        ptr=head;
+
+        if (head->next==NULL){//Only 1 element
+            free(head);
+            head=NULL;
+        }
+
+        else if ((head->next)->next==head){//2 elements in the LL
+            head=head->next;//Updating head
+            head->next=NULL;
+            free(temp);
+        }
+
+        else{
+
+            while(ptr->next!=head){
+                ptr=ptr->next;
+            }//Updating ptr until "last" node of LL
+
+            head=head->next; //Updating head
+            ptr->next=head; //Linking last node to head
+
+            free(temp);//Old Head
+            temp=NULL;
+        }
+    }
+
+}
+
+void DeleteAnyNumber(int del_elem){
+
+    struct Node* ptr_prev;
+    struct Node* ptr;
+
+    int flag=0;
+
+    if(head==NULL){
+        printf("\nLL is empty!");
+    }
+
+    else{
+
+        ptr_prev=head;
+        ptr=head->next;
+
+        while(ptr!=head){
+
+            if(ptr_prev->data==del_elem){
+                flag=1;
+                break;
+            }
+
+            else{
+
+                if(ptr==NULL){
+                    break;
+                }
+
+                else{
+                    ptr_prev=ptr_prev->next;
+                    ptr=ptr->next;
+                }
+            }
+        }
+
+        if (flag==1){
+
+            if(ptr==NULL){
+                free(ptr_prev);
+                ptr_prev=NULL;
+            }
+
+            else if(ptr->next==head){
+                ptr_prev->next=NULL;
+                free(ptr);
+                ptr=NULL;
+            }
+
+
+            ptr_prev=ptr->next;
+            ptr->next=NULL;
+            free(ptr);
+            ptr=NULL;
+
+        }
+
+        else{
+            printf("\nThe element does not exist! ");
+        }
+
+
 
     }
 
@@ -96,7 +313,10 @@ void Display(){
 int main(){
 
     int choice;
+    int c;
     int elem;
+
+    int next_elem;
 
     do{
 
@@ -111,15 +331,74 @@ int main(){
         switch(choice){
 
             case 1:
-                printf("Enter the element: ");
+
+                printf("\n1.Insert Back");
+                printf("\n2.Insert Front");
+                printf("\n3.Insert wrt next Number");
+
+                printf("\n\nEnter Choice: ");
+                scanf("%d",&c);
+
+                printf("\nEnter the element: ");
                 scanf("%d",&elem);
-                Insert(elem);
-                break;
+
+                switch(c){
+
+                    case 1:
+                        InsertBack(elem);
+                        break;
+                    
+                    case 2:
+                        InsertBack(elem);
+                        break;
+                    
+                    case 3:
+                        printf("\nEnter the Number after it needs to be inserted: ");
+                        scanf("%d",&next_elem);
+                        InsertAnyPos(elem,next_elem);
+                        break;
+
+                    default:
+                        printf("\nInvalid Choice!");
+
+                }
+
+            break;
             
             case 2:
-                Delete();
-                break;
-            
+
+                printf("\n1 Delete Back");
+                printf("\n2 Delete Front");
+                printf("\n3 Delete according to Number");
+
+                printf("\n\nEnter Choice: ");
+                scanf("%d",&c);
+
+                printf("\nEnter the element: ");
+                scanf("%d",&elem);
+
+                switch(c){
+
+                    case 1:
+                        InsertBack(elem);
+                        break;
+                    
+                    case 2:
+                        InsertBack(elem);
+                        break;
+                    
+                    case 3:
+                        printf("\nEnter the Number to be deleted: ");
+                        scanf("%d",&next_elem);
+                        InsertAnyPos(elem,next_elem);
+                        break;
+
+                    default:
+                        printf("\nInvalid Choice!");
+                }
+
+            break;
+
             case 3:
                 Display();
                 break;
