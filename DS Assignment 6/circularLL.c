@@ -55,25 +55,29 @@ void InsertFront(int elem){
 
     struct Node* newNode=malloc(sizeof(struct Node));
     struct Node* temp;
+    struct Node* ptr;
 
     if (head==NULL){
         IsEmpty(elem);
     }
 
     else{
-
+        
         newNode->data=elem;
-        newNode->next=head; //the previous head
+        newNode->next=head; //the old head
 
-        head=newNode;//updating head to newNode
+        temp=head->next;
+        ptr=head;
 
-        temp=head;
-
-        while(temp->next!=head){
+        while(temp!=head && temp!=NULL){
             temp=temp->next;
+            ptr=ptr->next;
         }
 
-        temp->next=head; //Linking the "last" node of the LL with new Head
+        ptr->next=newNode;
+        head=newNode;
+
+
 
     }
 }
@@ -152,8 +156,8 @@ void DeleteBack(){
         ptr=head->next;
 
         if (ptr==NULL){//only 1 element in the list
-            free(prev);
-            prev=NULL;
+            free(head);
+            head=NULL;
         }
 
         else if(ptr->next==head){//2 elements in the list
@@ -239,7 +243,7 @@ void DeleteAnyNumber(int del_elem){
 
         while(ptr!=head){
 
-            if(ptr_prev->data==del_elem){
+            if(ptr->data==del_elem){
                 flag=1;
                 break;
             }
@@ -270,11 +274,12 @@ void DeleteAnyNumber(int del_elem){
                 ptr=NULL;
             }
 
-
-            ptr_prev=ptr->next;
-            ptr->next=NULL;
-            free(ptr);
-            ptr=NULL;
+            else{
+                ptr_prev->next=ptr->next;
+                ptr->next=NULL;
+                free(ptr);
+                ptr=NULL;
+            }
 
         }
 
@@ -290,16 +295,15 @@ void DeleteAnyNumber(int del_elem){
 
 void Display(){
     
-    struct Node* ptr=head;
-
     if (head==NULL){
         printf("\nLL Empty\n");
     }
 
     else{
 
+        struct Node* ptr=head->next;
+
         printf("%d ",head->data);
-        ptr=ptr->next;
 
         while(ptr!=head && ptr!=NULL){
             printf("%d ",ptr->data);
@@ -349,7 +353,7 @@ int main(){
                         break;
                     
                     case 2:
-                        InsertBack(elem);
+                        InsertFront(elem);
                         break;
                     
                     case 3:
@@ -374,23 +378,20 @@ int main(){
                 printf("\n\nEnter Choice: ");
                 scanf("%d",&c);
 
-                printf("\nEnter the element: ");
-                scanf("%d",&elem);
-
                 switch(c){
 
                     case 1:
-                        InsertBack(elem);
+                        DeleteBack(elem);
                         break;
                     
                     case 2:
-                        InsertBack(elem);
+                        DeleteFront(elem);
                         break;
                     
                     case 3:
                         printf("\nEnter the Number to be deleted: ");
                         scanf("%d",&next_elem);
-                        InsertAnyPos(elem,next_elem);
+                        DeleteAnyNumber(next_elem);
                         break;
 
                     default:
