@@ -190,6 +190,40 @@ void InsertAnyPosition(int elem,int pos){
     }
 }
 
+void Delete(struct Node** ptr){
+
+    if((*ptr)->prev==NULL){ //if the node to be deleted is the 1st node
+
+        head=head->next; //Changing the head value
+        (*ptr)->next=NULL;
+        free((*ptr));
+        *ptr=NULL;
+    }
+
+    else if((*ptr)->next==NULL){//if the node to be deleted is the last node
+
+        tail=tail->prev;
+        (*ptr)->prev=NULL;
+        free(*ptr);
+        *ptr=NULL;
+
+    }
+
+    else{
+
+        ((*ptr)->prev)->next=(*ptr)->next;
+        ((*ptr)->next)->prev=(*ptr)->prev; 
+        //chance for segmentation fault if node selected is 1st or last
+
+        (*ptr)->next=NULL;
+        (*ptr)->prev=NULL;
+
+        free(*ptr);
+        *ptr=NULL;
+    }
+}
+
+
 void DeleteNode(int del_elem){
 
     if (head==NULL){
@@ -211,35 +245,7 @@ void DeleteNode(int del_elem){
             ptr=ptr->next;
         }
 
-        if(ptr->prev==NULL){ //if the node to be deleted is the 1st node
-
-            head=head->next; //Changing the head value
-            ptr->next=NULL;
-            free(ptr);
-            ptr=NULL;
-        }
-
-        else if(ptr->next==NULL){//if the node to be deleted is the last node
-
-            tail=tail->prev;
-            ptr->prev=NULL;
-            free(ptr);
-            ptr=NULL;
-
-        }
-
-        else{
-
-            (ptr->prev)->next=ptr->next;
-            (ptr->next)->prev=ptr->prev; 
-            //chance for segmentation fault if node selected is 1st or last
-
-            ptr->next=NULL;
-            ptr->prev=NULL;
-
-            free(ptr);
-            ptr=NULL;
-        }
+        Delete(&ptr);
     }
 }
 
@@ -315,36 +321,8 @@ void DeleteSmallest(){
             ptr=ptr->next;
         }
 
-        if(ptr->prev==NULL){ //if the node to be deleted is the 1st node
-
-            head=head->next; //Changing the head value
-            ptr->next=NULL;
-            free(ptr);
-            ptr=NULL;
-        }
-
-        else if(ptr->next==NULL){//if the node to be deleted is the last node
-
-            tail=tail->prev;
-            ptr->prev=NULL;
-            free(ptr);
-            ptr=NULL;
-
-        }
-
-        else{
-
-            (ptr->prev)->next=ptr->next;
-            (ptr->next)->prev=ptr->prev; 
-            //chance for segmentation fault if node selected is 1st or last
-
-            ptr->next=NULL;
-            ptr->prev=NULL;
-
-            free(ptr);
-            ptr=NULL;
-        }        
+        Delete(&ptr);
     }
 }
 
-//need to remove some repetition and include the main function
+//include the main function
