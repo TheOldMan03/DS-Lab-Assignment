@@ -6,9 +6,11 @@ struct term{
     int coeff;
     int expon;
     struct term* next;
+    struct term* prev;
 };
 
 //tail is used to reduce the time complexity from O(n) to O(1) while inserting in the end
+
 //for Polynomial A
 struct term* headA=NULL;
 struct term* tailA=NULL;
@@ -33,6 +35,7 @@ void InsertTerms(struct term** head,struct term** tail,int coefficient,int expon
         newNode->coeff=coefficient;
         newNode->expon=exponent;
         newNode->next=NULL;
+        newNode->prev=NULL;
 
         *tail=newNode;
     }
@@ -40,6 +43,7 @@ void InsertTerms(struct term** head,struct term** tail,int coefficient,int expon
     else{
         
         (*tail)->next=newNode;
+        newNode->prev=*tail;
 
         newNode->coeff=coefficient;
         newNode->expon=exponent;
@@ -117,7 +121,13 @@ void PAdd_Or_PSub(struct term** HeadA,struct term** HeadB,int c){ //c is used to
     }
 
     while(ptrB!=NULL){
-        InsertTerms(&headC,&tailC,ptrB->coeff,ptrB->expon);
+        if (c==0){
+            InsertTerms(&headC,&tailC,ptrB->coeff,ptrB->expon);
+        }
+
+        else{
+            InsertTerms(&headC,&tailC,-(ptrB->coeff),ptrB->expon);
+        }            
         ptrB=ptrB->next;
     }
 
@@ -125,6 +135,18 @@ void PAdd_Or_PSub(struct term** HeadA,struct term** HeadB,int c){ //c is used to
 
     //here the resultant LL is getting updated by the InsertFunction and therefore 
     //there is no need to check on that LL
+}
+
+void DeleteNode(struct term** currptr){//it will never be the 1st node to be deleted
+    
+    ((*currptr)->prev)->next =(*currptr)->next;
+    ((*currptr)->next)->prev=(*currptr)->prev;
+
+    (*currptr)->next=NULL;
+    (*currptr)->prev=NULL;
+
+    free(*currptr);
+    *currptr=NULL;
 }
 
 void PMulti(struct term** HeadA,struct term** HeadB){//Need to add Like terms together
@@ -145,10 +167,32 @@ void PMulti(struct term** HeadA,struct term** HeadB){//Need to add Like terms to
 
         ptrB=*HeadB;
         ptrA=ptrA->next;
-
     }
 
+    struct term* ptrC=headC->next;
+    struct term* ptrNext;
+    struct term* temp;
 
+
+    while(ptrC!=NULL){
+
+        int x=ptrC->expon;
+        ptrNext=ptrC->next;
+
+        while(ptrNext!=NULL){
+            
+            if(x==ptrNext->expon){
+                ptrC->coeff+=ptrNext->coeff;
+                temp=ptrNext->prev;
+                DeleteNode(&ptrNext);
+                ptrNext=temp;
+                
+            }
+
+            ptrNext=ptrNext->next;
+        }
+        ptrC=ptrC->next;
+    }
 }
 
 void TakeTerms(){
